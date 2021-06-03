@@ -8,6 +8,6 @@ module.exports = (logger) => {
             useFindAndModify: false,
             useCreateIndex: true,
         })
-        .then(() => logger.info('success'))
+        .then(() => logger.info('connected.......'))
         .catch((e) => logger.error(e.message, e));
 };
