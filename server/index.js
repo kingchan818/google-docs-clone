@@ -11,8 +11,8 @@ const io = require('socket.io')(3001, {
 });
 
 io.on('connection', (socket) => {
-    socket.on('get-doc', (docId) => {
-        const doc = createDoc(docId);
+    socket.on('get-doc', async (docId) => {
+        const doc = await createDoc(docId);
         socket.join(docId);
         socket.emit('load-doc', doc.data);
 
@@ -38,6 +38,7 @@ const createDoc = async (id) => {
             _id: id,
             data: defaultValue,
         });
+        await newDoc.save();
         return newDoc;
     }
 };
