@@ -4,7 +4,7 @@ import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
-const SAVETIME = 5000;
+const SAVETIME = 1000;
 
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
