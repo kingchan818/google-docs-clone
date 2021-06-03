@@ -4,6 +4,8 @@ import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
+const SAVETIME = 5000;
+
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
     ['blockquote', 'code-block'],
@@ -66,6 +68,16 @@ export default function TextEditor() {
 
         return () => {
             quill.off('text-change', eHandler);
+        };
+    }, [socket, quill]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const timer = setInterval(() => {}, SAVETIME);
+        socket.emit('save-doc', quill.getContents());
+        return () => {
+            clearInterval(timer);
         };
     }, [socket, quill]);
 
