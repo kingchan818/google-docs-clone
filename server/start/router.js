@@ -10,5 +10,6 @@ module.exports = (app) => {
             credentials: true,
         })
     );
+    app.use('/api/user', login);
     app.use(express.json());
 };
