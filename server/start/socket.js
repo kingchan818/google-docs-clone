@@ -1,3 +1,6 @@
+const { Doc } = require('../models/doc');
+const defaultValue = '';
+
 module.exports = (io) => {
     io.on('connection', (socket) => {
         socket.on('get-doc', async (docId) => {

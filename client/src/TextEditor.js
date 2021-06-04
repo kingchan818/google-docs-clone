@@ -4,7 +4,7 @@ import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
-const SAVETIME = 1000;
+const SAVETIME = 3000;
 
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -63,6 +63,7 @@ export default function TextEditor() {
         const eHandler = (delta, oldDelta, source) => {
             if (source !== 'user') return;
             socket.emit('changes', delta);
+            console.log('delta', delta);
         };
         quill.on('text-change', eHandler);
 
@@ -74,8 +75,10 @@ export default function TextEditor() {
     useEffect(() => {
         if (socket == null || quill == null) return;
 
-        const timer = setInterval(() => {}, SAVETIME);
-        socket.emit('save-doc', quill.getContents());
+        const timer = setInterval(() => {
+            socket.emit('save-doc', quill.getContents());
+        }, SAVETIME);
+
         return () => {
             clearInterval(timer);
         };
@@ -92,7 +95,6 @@ export default function TextEditor() {
             modules: { toolbar: toolbarOptions },
         });
         q.disable();
-        q.setText('loading....');
         setQuill(q);
     }, []);
 
