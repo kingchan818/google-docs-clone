@@ -1,5 +1,10 @@
+const express = require('express');
+const app = express();
+
 const { logger } = require('./start/logger');
 require('./start/db')(logger);
+
+app.listen(5000);
 
 const io = require('socket.io')(3001, {
     cors: {

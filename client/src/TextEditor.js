@@ -95,6 +95,7 @@ export default function TextEditor() {
             modules: { toolbar: toolbarOptions },
         });
         q.disable();
+        q.setText('fetching from db...');
         setQuill(q);
     }, []);
 
