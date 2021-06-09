@@ -3,6 +3,7 @@
 # dependencies
 *node_modules
 *.log
+*.env
 /.pnp
 .pnp.js
 
