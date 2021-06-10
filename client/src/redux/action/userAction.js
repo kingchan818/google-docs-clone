@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const login = (username, password) => async (dispatch, getSatae) => {
+export const login = (email, password) => async (dispatch, getState) => {
     try {
         const { headers } = await axios.post('user/login', {
-            username: username,
+            email: email,
             password: password,
         });
         console.log(headers);
@@ -22,7 +22,7 @@ export const login = (username, password) => async (dispatch, getSatae) => {
 
 export const register = (username, email, password, password1) => async (dispatch, getState) => {
     try {
-        const { headers } = await axios.post('user/login', {
+        const { data } = await axios.post('user/login', {
             username: username,
             email: email,
             password: password,
@@ -30,9 +30,8 @@ export const register = (username, email, password, password1) => async (dispatc
         });
         dispatch({
             type: 'REGISTER_SUCCESS',
-            payload: headers['x-auth-token'],
+            payload: data,
         });
-        localStorage.setItem('user', JSON.stringify(getState().user));
     } catch (error) {
         dispatch({
             type: 'REGISTER_FAIL',

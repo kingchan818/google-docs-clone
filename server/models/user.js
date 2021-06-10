@@ -20,10 +20,12 @@ const userSchema = new mongoose.Schema({
         maxLength: 50,
         unique: true,
     },
-    doc: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Docs',
-    },
+    doc: [
+        {
+            type: mongoose.Schema.Types.String,
+            ref: 'Docs',
+        },
+    ],
 });
 
 userSchema.methods.genToken = function () {
@@ -41,7 +43,7 @@ function UserValidator(user) {
             .equal(Joi.ref('password'))
             .required()
             .options({ messages: { 'any.only': 'password confirmation does not match password' } }),
-        email: Joi.string().required().min(5).max(50),
+        email: Joi.string().required().min(5).max(50).email(),
     });
     const result = schema.validate(user);
     return result;

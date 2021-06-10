@@ -26,6 +26,7 @@ export default function TextEditor() {
     const { id: docId } = useParams();
     const [socket, setSocket] = useState();
     const [quill, setQuill] = useState();
+    const user = localStorage.getItem('user');
 
     useEffect(() => {
         const s = io('http://localhost:3001');
@@ -43,7 +44,7 @@ export default function TextEditor() {
             quill.enable();
         });
 
-        socket.emit('get-doc', docId);
+        socket.emit('get-doc', docId, user._id);
     }, [socket, quill, docId]);
 
     useEffect(() => {
