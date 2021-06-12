@@ -12,15 +12,19 @@ export default function Login() {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        try {
-            const { data } = await axios.post('/api/auth/login', {
-                email: email,
-                password: password,
-            });
-            console.log(data);
-        } catch (e) {
-            console.log(e.message);
-        }
+
+        dispatch(login(email, password));
+
+        // try {
+        //     const { data } = await axios.post('/api/auth/login', {
+        //         email: email,
+        //         password: password,
+        //     });
+        //     console.log(data);
+        // } catch (e) {
+        //     console.log(e.message);
+        // }
+        console.log(detail);
     };
 
     return (

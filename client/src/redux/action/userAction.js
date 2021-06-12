@@ -1,15 +1,17 @@
 import axios from 'axios';
-
+import jwt_decode from 'jwt-decode';
 export const login = (email, password) => async (dispatch, getState) => {
     try {
-        const { headers } = await axios.post('user/login', {
+        const { headers } = await axios.post('/api/auth/login', {
             email: email,
             password: password,
         });
-        console.log(headers);
+
+        const decode = jwt_decode(headers['x-auth-token']);
+        console.log(decode);
         dispatch({
             type: 'LOGIN_SUCCESS',
-            payload: headers['x-auth-token'],
+            payload: decode,
         });
         localStorage.setItem('user', JSON.stringify(getState().user));
     } catch (error) {
@@ -17,12 +19,13 @@ export const login = (email, password) => async (dispatch, getState) => {
             type: 'LOGIN_FAIL',
             payload: error.message,
         });
+        console.log(error);
     }
 };
 
 export const register = (username, email, password, password1) => async (dispatch, getState) => {
     try {
-        const { data } = await axios.post('user/login', {
+        const { data } = await axios.post('/api/auth/register', {
             username: username,
             email: email,
             password: password,
