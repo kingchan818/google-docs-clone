@@ -29,7 +29,7 @@ export const register = (username, email, password, password1) => async (dispatc
             username: username,
             email: email,
             password: password,
-            password1: password1,
+            password_confirmation: password1,
         });
         dispatch({
             type: 'REGISTER_SUCCESS',
@@ -38,7 +38,7 @@ export const register = (username, email, password, password1) => async (dispatc
     } catch (error) {
         dispatch({
             type: 'REGISTER_FAIL',
-            payload: error.message,
+            payload: error,
         });
     }
 };
