@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../redux/action/userAction';
 import styled from 'styled-components';
-import { TextField, Button, Checkbox, FormControlLabel, Container, Grid, makeStyles } from '@material-ui/core';
+import { TextField, Button, Checkbox, FormControlLabel, Grid } from '@material-ui/core';
 
 export default function Register() {
     const dispatch = useDispatch();

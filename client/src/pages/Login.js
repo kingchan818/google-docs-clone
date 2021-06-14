@@ -1,57 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/action/userAction';
+import { TextField, Button, Checkbox, FormControlLabel, Grid } from '@material-ui/core';
+import styled from 'styled-components';
 
 export default function Login() {
     const dispatch = useDispatch();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [click, setClick] = useState(false);
 
     const { detail } = useSelector((state) => state.user);
 
+    const showPassword = (e) => {
+        setClick(!click);
+        click
+            ? (document.getElementById('password').type = 'password')
+            : (document.getElementById('password').type = 'text');
+    };
+
     const submitForm = async (e) => {
         e.preventDefault();
-
         dispatch(login(email, password));
-
-        // try {
-        //     const { data } = await axios.post('/api/auth/login', {
-        //         email: email,
-        //         password: password,
-        //     });
-        //     console.log(data);
-        // } catch (e) {
-        //     console.log(e.message);
-        // }
         console.log(detail);
     };
 
     return (
-        <div className="login-form">
-            <form onSubmit={(e) => submitForm(e)}>
-                <div className="email">
-                    <label>email:</label>
-                    <input
-                        type="text"
-                        name="email"
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
+        <form onSubmit={(e) => submitForm(e)}>
+            <LoginForm>
+                <Grid container spacing="2" direction="column" justify="center" alignItems="center">
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Email"
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id="password"
+                            type="password"
+                            label="Password"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <FormControlLabel
+                        value="top"
+                        control={<Checkbox color="primary" />}
+                        label="show password "
+                        labelPlacement="start"
+                        onClick={(e) => showPassword(e)}
                     />
-                </div>
-                <div className="password">
-                    <label htmlFor="password">password :</label>
-                    <input
-                        type="text"
-                        name="password"
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                    />
-                </div>
-                <input type="submit" value="Submit" />
-            </form>
-        </div>
+
+                    <Button type="submit" variant="contained" color="default" size="small">
+                        Submit
+                    </Button>
+                </Grid>
+            </LoginForm>
+        </form>
     );
 }
+const LoginForm = styled.div`
+    margin: 15rem;
+`;
