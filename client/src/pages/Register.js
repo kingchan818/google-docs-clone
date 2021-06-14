@@ -88,8 +88,8 @@ export default function Register() {
 }
 
 const RegisterForm = styled.div`
+    margin: 15rem auto;
     display: flex;
-    padding: 20rem;
     align-items: center;
     flex-direction: column;
     justify-content: center;
