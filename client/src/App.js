@@ -4,20 +4,20 @@ import { v4 as uuidv4 } from 'uuid';
 import Login from './pages/Login';
 import Register from './pages/Register';
 function App() {
+    const user = localStorage.getItem('user');
+
     return (
         <Router>
             <Switch>
+                <Route path="/doc" exact>
+                    {user ? <Redirect to={`/documents/${uuidv4()}}`}></Redirect> : <Redirect to="/" />}
+                </Route>
+                <Route path="/documents/:id">{user ? <TextEditor /> : <Redirect to="/" />}</Route>
                 <Route path="/" exact>
-                    <Login />
+                    {user ? <Redirect to="/doc" /> : <Login />}
                 </Route>
                 <Route path="/register" exact>
-                    <Register />
-                </Route>
-                <Route path="/doc" exact>
-                    <Redirect to={`/documents/${uuidv4()}}`}></Redirect>
-                </Route>
-                <Route path="/documents/:id">
-                    <TextEditor />
+                    {user ? <Redirect to="/doc" /> : <Register />}
                 </Route>
             </Switch>
         </Router>
